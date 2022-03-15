@@ -15,7 +15,7 @@ const getWeatherDataFromApi = async() => {
     let apiKey = DecryptStringAES(localStorage.getItem('apiKey'));
     let inputVal = input.value;
     let units = 'metric';
-    let lang = 'en';
+    let lang = 'tr';
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=${apiKey}&units=${units}&lang=${lang}`;
 
     try {
@@ -27,10 +27,13 @@ const getWeatherDataFromApi = async() => {
         let cityList = list.querySelectorAll('.city');
         let cityListArray = Array.from(cityList);
         if(cityListArray.length > 0){
-            const filteredArray = cityListArray.filter(card => card.querySelector('.cty-name span').innerText == name);
+            const filteredArray = cityListArray.filter(card => card.querySelector('.city-name span').innerText == name);
     
             if(filteredArray.length > 0){
                 msg.innerText = `You already know the weather for ${name}, Please search for another city 😉`;
+                setTimeout(()=>{
+                    msg.innerText = "";
+                }, 5000);
                 form.reset();
                 input.focus();
                 return;
@@ -59,7 +62,6 @@ const getWeatherDataFromApi = async() => {
         setTimeout(() => {
             msg.innerText = '';
         }, 5000)
-        form.reset();
-        input.focus();
+        
     }
 };
